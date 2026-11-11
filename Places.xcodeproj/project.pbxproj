@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0A1B2C3D4E5F60718293A4B1 /* LocationsApi in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1B2C3D4E5F60718293A4B3 /* LocationsApi */; };
+		0A1B2C3D4E5F60718293A4B7 /* Utility in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1B2C3D4E5F60718293A4B8 /* Utility */; };
+		0A1B2C3D4E5F60718293A4BD /* Features in Frameworks */ = {isa = PBXBuildFile; productRef = 0A1B2C3D4E5F60718293A4BE /* Features */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		00C9C50030A46657000F56F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -34,6 +40,12 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Packages/ApiService,
+				Packages/Features,
+				Packages/LocationsApi,
+				Packages/Models,
+				Packages/UIComponents,
+				Packages/Utility,
 			);
 			target = 00C9C4E830A46655000F56F4 /* Places */;
 		};
@@ -65,6 +77,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A1B2C3D4E5F60718293A4B1 /* LocationsApi in Frameworks */,
+				0A1B2C3D4E5F60718293A4B7 /* Utility in Frameworks */,
+				0A1B2C3D4E5F60718293A4BD /* Features in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +140,9 @@
 			);
 			name = Places;
 			packageProductDependencies = (
+				0A1B2C3D4E5F60718293A4B3 /* LocationsApi */,
+				0A1B2C3D4E5F60718293A4B8 /* Utility */,
+				0A1B2C3D4E5F60718293A4BE /* Features */,
 			);
 			productName = Places;
 			productReference = 00C9C4E930A46655000F56F4 /* Places.app */;
@@ -184,7 +202,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2660;
-				LastUpgradeCheck = 2660;
+				LastUpgradeCheck = 2720;
 				TargetAttributes = {
 					00C9C4E830A46655000F56F4 = {
 						CreatedOnToolsVersion = 26.6;
@@ -208,6 +226,13 @@
 			);
 			mainGroup = 00C9C4E030A46655000F56F4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0A1B2C3D4E5F60718293A4B5 /* XCLocalSwiftPackageReference "Places/Packages/LocationsApi" */,
+				0A1B2C3D4E5F60718293A4B6 /* XCLocalSwiftPackageReference "Places/Packages/Models" */,
+				0A1B2C3D4E5F60718293A4B9 /* XCLocalSwiftPackageReference "Places/Packages/Utility" */,
+				0A1B2C3D4E5F60718293A4BC /* XCLocalSwiftPackageReference "Places/Packages/UIComponents" */,
+				0A1B2C3D4E5F60718293A4BF /* XCLocalSwiftPackageReference "Places/Packages/Features" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 00C9C4EA30A46655000F56F4 /* Products */;
 			projectDirPath = "";
@@ -293,7 +318,6 @@
 				INFOPLIST_FILE = Places/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -324,7 +348,6 @@
 				INFOPLIST_FILE = Places/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -402,6 +425,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -458,6 +482,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -583,6 +608,44 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0A1B2C3D4E5F60718293A4B5 /* XCLocalSwiftPackageReference "Places/Packages/LocationsApi" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Places/Packages/LocationsApi;
+		};
+		0A1B2C3D4E5F60718293A4B6 /* XCLocalSwiftPackageReference "Places/Packages/Models" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Places/Packages/Models;
+		};
+		0A1B2C3D4E5F60718293A4B9 /* XCLocalSwiftPackageReference "Places/Packages/Utility" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Places/Packages/Utility;
+		};
+		0A1B2C3D4E5F60718293A4BC /* XCLocalSwiftPackageReference "Places/Packages/UIComponents" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Places/Packages/UIComponents;
+		};
+		0A1B2C3D4E5F60718293A4BF /* XCLocalSwiftPackageReference "Places/Packages/Features" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Places/Packages/Features;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0A1B2C3D4E5F60718293A4B3 /* LocationsApi */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocationsApi;
+		};
+		0A1B2C3D4E5F60718293A4B8 /* Utility */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Utility;
+		};
+		0A1B2C3D4E5F60718293A4BE /* Features */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Features;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 00C9C4E130A46655000F56F4 /* Project object */;
 }

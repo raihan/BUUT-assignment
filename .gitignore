@@ -1,11 +1,19 @@
 # macOS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
 
 # Xcode user-specific state
+# (shared schemes in xcshareddata/ and *.xctestplan files are kept)
 xcuserdata/
 *.xcuserstate
 *.xcscmblueprint
 *.xccheckout
+*.moved-aside
+*.hmap
+timeline.xctimeline
+playground.xcworkspace
 
 # Build output
 build/
@@ -15,15 +23,28 @@ DerivedData/
 *.dSYM
 
 # Swift Package Manager
+# Local packages live in Places/Packages; their Xcode-generated state is not shared.
 .build/
 .swiftpm/
 Package.resolved.orig
+.netrc
 
 # Test & coverage results
 *.xcresult
+*.profraw
+*.profdata
 
 # Fastlane (if added later)
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~
+
+# Claude Code local settings
+.claude/settings.local.json

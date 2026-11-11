@@ -1,0 +1,78 @@
+{
+  "configurations" : [
+    {
+      "id" : "8940C8E4-B322-4895-B499-CFBA285B33F6",
+      "name" : "Default",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Places.xcodeproj",
+      "identifier" : "00C9C4E830A46655000F56F4",
+      "name" : "Places"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Places.xcodeproj",
+        "identifier" : "00C9C4FE30A46657000F56F4",
+        "name" : "PlacesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places.xcodeproj",
+        "identifier" : "00C9C50830A46657000F56F4",
+        "name" : "PlacesUITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places\/Packages\/ApiService",
+        "identifier" : "ApiServiceTests",
+        "name" : "ApiServiceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places\/Packages\/Features",
+        "identifier" : "FeaturesTests",
+        "name" : "FeaturesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places\/Packages\/LocationsApi",
+        "identifier" : "LocationsApiTests",
+        "name" : "LocationsApiTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places\/Packages\/Models",
+        "identifier" : "ModelsTests",
+        "name" : "ModelsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places\/Packages\/UIComponents",
+        "identifier" : "UIComponentsTests",
+        "name" : "UIComponentsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Places\/Packages\/Utility",
+        "identifier" : "UtilityTests",
+        "name" : "UtilityTests"
+      }
+    }
+  ],
+  "version" : 1
+}

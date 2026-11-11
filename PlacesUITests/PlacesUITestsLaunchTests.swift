@@ -2,7 +2,8 @@
 //  PlacesUITestsLaunchTests.swift
 //  PlacesUITests
 //
-//  Created by Abdullah Muhammad Zubair on 11/11/2026.
+//  Created by Abdullah Zubair on 11/11/2026.
+//  Copyright (c) 2026 DEPT. All rights reserved.
 //
 
 import XCTest

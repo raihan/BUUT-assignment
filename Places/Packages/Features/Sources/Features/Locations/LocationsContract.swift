@@ -24,8 +24,8 @@ protocol LocationsRouting: AnyObject {
 
 @MainActor
 protocol LocationsPresenting: AnyObject {
-    var interactor: LocationsInteracting! { get set }
-    var router: LocationsRouting! { get set }
+    var interactor: LocationsInteracting { get }
+    var router: LocationsRouting { get }
     var view: LocationsViewable? { get set }
 
     func viewDidLoad()
@@ -48,7 +48,7 @@ protocol LocationsInteractingOutput: AnyObject {
 
 @MainActor
 protocol LocationsViewable: AnyObject {
-    var presenter: LocationsPresenting! { get set }
+    var presenter: LocationsPresenting { get }
 
     func showLoading()
     func show(locations: [LocationCellViewModel])

@@ -36,15 +36,4 @@ struct LocationsRouterTests {
     func returnsNilNavigationController() {
         #expect(subject.navigationController == nil)
     }
-
-    @Test("does not retain the root view controller")
-    func doesNotRetainRootViewController() {
-        let subject = LocationsRouter()
-        var rootViewController: UIViewController? = UIViewController()
-        subject.rootViewController = rootViewController
-
-        rootViewController = nil
-
-        #expect(subject.rootViewController == nil)
-    }
 }

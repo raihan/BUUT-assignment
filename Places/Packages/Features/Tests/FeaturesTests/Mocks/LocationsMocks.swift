@@ -14,8 +14,8 @@ import UIComponents
 // MARK: - LocationsPresentingMock
 
 final class LocationsPresentingMock: LocationsPresenting {
-    var interactor: LocationsInteracting!
-    var router: LocationsRouting!
+    let interactor: LocationsInteracting = LocationsInteractingMock()
+    let router: LocationsRouting = LocationsRoutingMock()
     weak var view: LocationsViewable?
 
     private(set) var viewDidLoadCallsCount = 0
@@ -78,7 +78,7 @@ final class LocationsInteractingOutputMock: LocationsInteractingOutput {
 // MARK: - LocationsViewableMock
 
 final class LocationsViewableMock: LocationsViewable {
-    var presenter: LocationsPresenting!
+    let presenter: LocationsPresenting = LocationsPresentingMock()
 
     private(set) var showLoadingCallsCount = 0
     var showLoadingCalled: Bool { showLoadingCallsCount > 0 }

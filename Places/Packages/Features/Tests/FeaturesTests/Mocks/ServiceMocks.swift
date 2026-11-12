@@ -30,7 +30,7 @@ actor LocationsApiProtocolMock: LocationsApiProtocol {
         if let fetchLocationsThrowableError {
             throw fetchLocationsThrowableError
         }
-        return fetchLocationsReturnValue!
+        return try fetchLocationsReturnValue ?? LocationsFixture.locations([])
     }
 }
 

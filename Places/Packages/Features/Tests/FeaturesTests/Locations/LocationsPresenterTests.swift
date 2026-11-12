@@ -15,14 +15,13 @@ import UIComponents
 @Suite("LocationsPresenter")
 @MainActor
 struct LocationsPresenterTests {
-    let subject = LocationsPresenter()
     let interactor = LocationsInteractingMock()
     let router = LocationsRoutingMock()
     let view = LocationsViewableMock()
+    let subject: LocationsPresenter
 
     init() {
-        subject.interactor = interactor
-        subject.router = router
+        subject = LocationsPresenter(interactor: interactor, router: router)
         subject.view = view
     }
 
@@ -62,8 +61,8 @@ struct LocationsPresenterTests {
         ])
 
         #expect(view.showLocationsReceivedLocations == [
-            LocationCellViewModel(name: "Amsterdam", coordinates: "\(formatted(52.3547498)), \(formatted(4.8339215))"),
-            LocationCellViewModel(name: "Mumbai", coordinates: "\(formatted(19.0823998)), \(formatted(72.8111468))")
+            LocationCellViewModel(name: "Amsterdam", coordinates: "Lat: \(formatted(52.3547498))  Long: \(formatted(4.8339215))"),
+            LocationCellViewModel(name: "Mumbai", coordinates: "Lat: \(formatted(19.0823998))  Long: \(formatted(72.8111468))")
         ])
         #expect(view.showMessageCalled == false)
     }
@@ -74,7 +73,7 @@ struct LocationsPresenterTests {
 
         let separator = Locale.current.decimalSeparator ?? "."
         let viewModel = try #require(view.showLocationsReceivedLocations?.first)
-        #expect(viewModel.coordinates == "52\(separator)3547, 4\(separator)8339")
+        #expect(viewModel.coordinates == "Lat: 52\(separator)3547  Long: 4\(separator)8339")
     }
 
     @Test("keeps the sign of negative coordinates")
@@ -82,7 +81,7 @@ struct LocationsPresenterTests {
         subject.didFetchLocations([Location(name: "Madrid", lat: 40.4380638, long: -3.7495758)])
 
         let viewModel = try #require(view.showLocationsReceivedLocations?.first)
-        #expect(viewModel.coordinates == "\(formatted(40.4380638)), \(formatted(-3.7495758))")
+        #expect(viewModel.coordinates == "Lat: \(formatted(40.4380638))  Long: \(formatted(-3.7495758))")
     }
 
     @Test("shows a placeholder for a location without a name")

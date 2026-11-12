@@ -15,18 +15,12 @@ public final class LocationsComponent: LocationsComponentType {
 
     public func assemble(locationsApi: LocationsApiProtocol, reverseGeocoder: ReverseGeocoding) -> UIViewController {
         let router = LocationsRouter()
-        let view = LocationsViewController()
-        let presenter = LocationsPresenter()
         let interactor = LocationsInteractor(locationsApi: locationsApi, reverseGeocoder: reverseGeocoder)
+        let presenter = LocationsPresenter(interactor: interactor, router: router)
+        let view = LocationsViewController(presenter: presenter)
 
-        presenter.interactor = interactor
         presenter.view = view
-        presenter.router = router
-
-        view.presenter = presenter
-
         interactor.output = presenter
-
         router.rootViewController = view
 
         return view

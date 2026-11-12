@@ -14,47 +14,45 @@ public protocol ReverseGeocoding: Sendable {
     func cityName(latitude: Double, longitude: Double) async -> String?
 }
 
+/// Resolves city names through a `CityNameLookup` and caches them per coordinate,
+/// so refreshing the list doesn't repeat lookups.
 public actor ReverseGeocoder: ReverseGeocoding {
-    /// Looks up the city name for a coordinate. Injected so tests don't hit the network.
-    typealias CityNameLookup = @Sendable (_ latitude: Double, _ longitude: Double) async throws -> String?
-
-    private let lookup: CityNameLookup
-    /// Results are cached per coordinate so refreshing the list doesn't repeat lookups.
+    private let cityNameLookup: CityNameLookup
     private var cache: [String: String] = [:]
 
-    public init() {
-        self.lookup = { try await ReverseGeocoder.mapKitCityName(latitude: $0, longitude: $1) }
-    }
-
-    init(lookup: @escaping CityNameLookup) {
-        self.lookup = lookup
+    public init(cityNameLookup: CityNameLookup = MapKitCityNameLookup()) {
+        self.cityNameLookup = cityNameLookup
     }
 
     public func cityName(latitude: Double, longitude: Double) async -> String? {
-        let cacheKey = "\(latitude),\(longitude)"
-        if let cachedCityName = cache[cacheKey] {
+        let key = "\(latitude),\(longitude)"
+        if let cachedCityName = cache[key] {
             return cachedCityName
         }
 
-        do {
-            guard let cityName = try await lookup(latitude, longitude) else {
-                return nil
-            }
-            cache[cacheKey] = cityName
-            return cityName
-        } catch {
-            return nil
-        }
+        // Failed or empty lookups aren't cached, so they're tried again next time.
+        let cityName = try? await cityNameLookup.cityName(latitude: latitude, longitude: longitude)
+        cache[key] = cityName
+        return cityName
     }
+}
 
-    // MARK: - MapKit
+// MARK: - Lookup
 
-    private static func mapKitCityName(latitude: Double, longitude: Double) async throws -> String? {
+/// Looks up the name of the city at a coordinate.
+public protocol CityNameLookup: Sendable {
+    func cityName(latitude: Double, longitude: Double) async throws -> String?
+}
+
+/// Looks up city names with MapKit reverse geocoding.
+public struct MapKitCityNameLookup: CityNameLookup {
+    public init() {}
+
+    public func cityName(latitude: Double, longitude: Double) async throws -> String? {
         let location = CLLocation(latitude: latitude, longitude: longitude)
         guard let request = MKReverseGeocodingRequest(location: location) else {
             return nil
         }
-        let mapItems = try await request.mapItems
-        return mapItems.first?.addressRepresentations?.cityName
+        return try await request.mapItems.first?.addressRepresentations?.cityName
     }
 }

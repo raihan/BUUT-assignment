@@ -9,131 +9,103 @@
 import Testing
 @testable import Utility
 
-@Suite
+@Suite("ReverseGeocoder")
 struct ReverseGeocoderTests {
-
-    private func makeSUT(spy: CityNameLookupSpy) -> ReverseGeocoder {
-        ReverseGeocoder(lookup: { try await spy.lookup(latitude: $0, longitude: $1) })
-    }
+    private let madrid = (latitude: 40.4380638, longitude: -3.7495758)
+    private let amsterdam = (latitude: 52.3547498, longitude: 4.8339215)
 
     // MARK: - Lookup
 
-    @Test
-    func returnsCityNameFromLookup() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.success("Madrid")])
-        let sut = makeSUT(spy: spy)
+    @Test("returns the city name from the lookup")
+    func returnsCityName() async {
+        let cityNameLookup = CityNameLookupMock(results: [.success("Madrid")])
+        let subject = ReverseGeocoder(cityNameLookup: cityNameLookup)
 
-        // When
-        let cityName = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
+        let cityName = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
 
-        // Then
         #expect(cityName == "Madrid")
     }
 
-    @Test
-    func passesCoordinateToLookup() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.success("Madrid")])
-        let sut = makeSUT(spy: spy)
+    @Test("passes the coordinate to the lookup")
+    func passesCoordinate() async {
+        let cityNameLookup = CityNameLookupMock(results: [.success("Madrid")])
+        let subject = ReverseGeocoder(cityNameLookup: cityNameLookup)
 
-        // When
-        _ = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
+        _ = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
 
-        // Then
-        #expect(await spy.lastLatitude == 40.4380638)
-        #expect(await spy.lastLongitude == -3.7495758)
+        #expect(await cityNameLookup.cityNameLatitudeLongitudeReceivedArguments?.latitude == madrid.latitude)
+        #expect(await cityNameLookup.cityNameLatitudeLongitudeReceivedArguments?.longitude == madrid.longitude)
     }
 
-    @Test
-    func returnsNilWhenLookupFindsNoCity() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.success(nil)])
-        let sut = makeSUT(spy: spy)
+    @Test("returns nil when the lookup finds no city")
+    func returnsNilWithoutCity() async {
+        let subject = ReverseGeocoder(cityNameLookup: CityNameLookupMock(results: [.success(nil)]))
 
-        // When
-        let cityName = await sut.cityName(latitude: 0, longitude: 0)
+        let cityName = await subject.cityName(latitude: 0, longitude: 0)
 
-        // Then
         #expect(cityName == nil)
     }
 
-    @Test
-    func returnsNilWhenLookupThrows() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.failure(CityNameLookupError())])
-        let sut = makeSUT(spy: spy)
+    @Test("returns nil when the lookup fails")
+    func returnsNilWhenLookupFails() async {
+        let subject = ReverseGeocoder(cityNameLookup: CityNameLookupMock(results: [.failure(CityNameLookupError())]))
 
-        // When
-        let cityName = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
+        let cityName = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
 
-        // Then
         #expect(cityName == nil)
     }
 
     // MARK: - Caching
 
-    @Test
-    func cachesCityNameForSameCoordinate() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.success("Madrid")])
-        let sut = makeSUT(spy: spy)
+    @Test("caches the city name for the same coordinate")
+    func cachesCityName() async {
+        let cityNameLookup = CityNameLookupMock(results: [.success("Madrid")])
+        let subject = ReverseGeocoder(cityNameLookup: cityNameLookup)
 
-        // When
-        let first = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
-        let second = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
+        let first = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
+        let second = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
 
-        // Then
         #expect(first == "Madrid")
         #expect(second == "Madrid")
-        #expect(await spy.callCount == 1)
+        #expect(await cityNameLookup.cityNameLatitudeLongitudeCallsCount == 1)
     }
 
-    @Test
-    func looksUpEachCoordinateSeparately() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.success("Madrid"), .success("Amsterdam")])
-        let sut = makeSUT(spy: spy)
+    @Test("looks up each coordinate separately")
+    func looksUpEachCoordinate() async {
+        let cityNameLookup = CityNameLookupMock(results: [.success("Madrid"), .success("Amsterdam")])
+        let subject = ReverseGeocoder(cityNameLookup: cityNameLookup)
 
-        // When
-        let madrid = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
-        let amsterdam = await sut.cityName(latitude: 52.3547498, longitude: 4.8339215)
+        let first = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
+        let second = await subject.cityName(latitude: amsterdam.latitude, longitude: amsterdam.longitude)
 
-        // Then
-        #expect(madrid == "Madrid")
-        #expect(amsterdam == "Amsterdam")
-        #expect(await spy.callCount == 2)
+        #expect(first == "Madrid")
+        #expect(second == "Amsterdam")
+        #expect(await cityNameLookup.cityNameLatitudeLongitudeCallsCount == 2)
     }
 
-    @Test
+    @Test("does not cache a missing city name")
     func doesNotCacheMissingCityName() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.success(nil), .success("Madrid")])
-        let sut = makeSUT(spy: spy)
+        let cityNameLookup = CityNameLookupMock(results: [.success(nil), .success("Madrid")])
+        let subject = ReverseGeocoder(cityNameLookup: cityNameLookup)
 
-        // When
-        let first = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
-        let second = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
+        let first = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
+        let second = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
 
-        // Then
         #expect(first == nil)
         #expect(second == "Madrid")
-        #expect(await spy.callCount == 2)
+        #expect(await cityNameLookup.cityNameLatitudeLongitudeCallsCount == 2)
     }
 
-    @Test
-    func retriesAfterFailedLookup() async {
-        // Given
-        let spy = CityNameLookupSpy(results: [.failure(CityNameLookupError()), .success("Madrid")])
-        let sut = makeSUT(spy: spy)
+    @Test("retries after a failed lookup")
+    func retriesAfterFailure() async {
+        let cityNameLookup = CityNameLookupMock(results: [.failure(CityNameLookupError()), .success("Madrid")])
+        let subject = ReverseGeocoder(cityNameLookup: cityNameLookup)
 
-        // When
-        let first = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
-        let second = await sut.cityName(latitude: 40.4380638, longitude: -3.7495758)
+        let first = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
+        let second = await subject.cityName(latitude: madrid.latitude, longitude: madrid.longitude)
 
-        // Then
         #expect(first == nil)
         #expect(second == "Madrid")
-        #expect(await spy.callCount == 2)
+        #expect(await cityNameLookup.cityNameLatitudeLongitudeCallsCount == 2)
     }
 }

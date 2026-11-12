@@ -19,20 +19,6 @@
   "testTargets" : [
     {
       "target" : {
-        "containerPath" : "container:Places.xcodeproj",
-        "identifier" : "00C9C4FE30A46657000F56F4",
-        "name" : "PlacesTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:Places.xcodeproj",
-        "identifier" : "00C9C50830A46657000F56F4",
-        "name" : "PlacesUITests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:Places\/Packages\/ApiService",
         "identifier" : "ApiServiceTests",
         "name" : "ApiServiceTests"

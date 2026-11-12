@@ -11,11 +11,16 @@ import Models
 import UIComponents
 
 final class LocationsPresenter: LocationsPresenting {
-    var interactor: LocationsInteracting!
-    var router: LocationsRouting!
+    let interactor: LocationsInteracting
+    let router: LocationsRouting
     weak var view: LocationsViewable?
 
     private let coordinateFormat = FloatingPointFormatStyle<Double>.number.precision(.fractionLength(4))
+
+    init(interactor: LocationsInteracting, router: LocationsRouting) {
+        self.interactor = interactor
+        self.router = router
+    }
 
     // MARK: LocationsPresenting
 
@@ -36,9 +41,12 @@ final class LocationsPresenter: LocationsPresenting {
     // MARK: Formatting
 
     private func makeCellViewModel(from location: Location) -> LocationCellViewModel {
-        LocationCellViewModel(
+        let latitude = location.lat.formatted(coordinateFormat)
+        let longitude = location.long.formatted(coordinateFormat)
+
+        return LocationCellViewModel(
             name: location.name ?? .unnamedLocation,
-            coordinates: "\(location.lat.formatted(coordinateFormat)), \(location.long.formatted(coordinateFormat))"
+            coordinates: "\(String.latitudeLabel) \(latitude)  \(String.longitudeLabel) \(longitude)"
         )
     }
 }
@@ -74,6 +82,8 @@ extension LocationsPresenter: LocationsInteractingOutput {
 
 extension String {
     fileprivate static var unnamedLocation: String { "Unnamed location" }
+    fileprivate static var latitudeLabel: String { "Lat:" }
+    fileprivate static var longitudeLabel: String { "Long:" }
 
     fileprivate static var emptyStateImageName: String { "mappin.slash" }
     fileprivate static var emptyStateTitle: String { "No Locations" }

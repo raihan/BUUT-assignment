@@ -26,7 +26,7 @@ final class UITableViewPartialMock: UITableView {
     }
 
     private(set) var dequeueReusableCellReceivedArguments: (identifier: String, indexPath: IndexPath)?
-    var dequeueReusableCellReturnValue: UITableViewCell!
+    var dequeueReusableCellReturnValue = UITableViewCell()
 
     override func dequeueReusableCell(withIdentifier identifier: String, for indexPath: IndexPath) -> UITableViewCell {
         dequeueReusableCellReceivedArguments = (identifier: identifier, indexPath: indexPath)

@@ -14,8 +14,8 @@ import UIComponents
 @Suite("LocationsViewController")
 @MainActor
 struct LocationsViewControllerTests {
-    let subject = LocationsViewController()
     let presenter = LocationsPresentingMock()
+    let subject: LocationsViewController
     let tableView = UITableViewPartialMock()
     let refreshControl = UIRefreshControlPartialMock()
 
@@ -23,7 +23,7 @@ struct LocationsViewControllerTests {
     let mumbai = LocationCellViewModel(name: "Mumbai", coordinates: "19.0824, 72.8111")
 
     init() {
-        subject.presenter = presenter
+        subject = LocationsViewController(presenter: presenter)
     }
 
     /// Swaps in the partial mocks so UIKit calls can be checked.

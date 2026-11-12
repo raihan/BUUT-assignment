@@ -10,7 +10,7 @@ import UIKit
 import UIComponents
 
 final class LocationsViewController: UIViewController, LocationsViewable {
-    var presenter: LocationsPresenting!
+    let presenter: LocationsPresenting
 
     private(set) var locations: [LocationCellViewModel] = []
     var refreshControl = UIRefreshControl()
@@ -24,6 +24,16 @@ final class LocationsViewController: UIViewController, LocationsViewable {
         tableView.refreshControl = refreshControl
         return tableView
     }()
+
+    init(presenter: LocationsPresenting) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: View lifecycle
 

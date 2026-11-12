@@ -13,51 +13,20 @@ import UIKit
 @Suite("LocationsComponent")
 @MainActor
 struct LocationsComponentTests {
-    @MainActor
-    final class LocationsComponentUnwrapper {
-        private let componentView: UIViewController
-
-        var view: LocationsViewController {
-            componentView as! LocationsViewController
-        }
-
-        var presenter: LocationsPresenter {
-            view.presenter as! LocationsPresenter
-        }
-
-        var interactor: LocationsInteractor {
-            presenter.interactor as! LocationsInteractor
-        }
-
-        var router: LocationsRouter {
-            presenter.router as! LocationsRouter
-        }
-
-        init(componentView: UIViewController) {
-            self.componentView = componentView
-        }
-    }
-
-    let locationsApi: LocationsApiProtocolMock
-    let reverseGeocoder: ReverseGeocodingMock
-    let component: LocationsComponent
+    let locationsApi = LocationsApiProtocolMock()
+    let reverseGeocoder = ReverseGeocodingMock()
     let view: LocationsViewController
     let presenter: LocationsPresenter
     let interactor: LocationsInteractor
     let router: LocationsRouter
 
-    init() {
-        locationsApi = LocationsApiProtocolMock()
-        reverseGeocoder = ReverseGeocodingMock()
-        component = LocationsComponent()
+    init() throws {
+        let rootViewController = LocationsComponent().assemble(locationsApi: locationsApi, reverseGeocoder: reverseGeocoder)
 
-        let rootViewController = component.assemble(locationsApi: locationsApi, reverseGeocoder: reverseGeocoder)
-        let module = LocationsComponentUnwrapper(componentView: rootViewController)
-
-        view = module.view
-        presenter = module.presenter
-        interactor = module.interactor
-        router = module.router
+        view = try #require(rootViewController as? LocationsViewController)
+        presenter = try #require(view.presenter as? LocationsPresenter)
+        interactor = try #require(presenter.interactor as? LocationsInteractor)
+        router = try #require(presenter.router as? LocationsRouter)
     }
 
     @Test("sets up the router dependencies")

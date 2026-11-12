@@ -33,6 +33,7 @@
 		00C9C4E930A46655000F56F4 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C9C4FF30A46657000F56F4 /* PlacesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C9C50930A46657000F56F4 /* PlacesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A1B2C3D4E5F60718293A4C0 /* Places.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Places.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -103,6 +104,7 @@
 		00C9C4E030A46655000F56F4 = {
 			isa = PBXGroup;
 			children = (
+				0A1B2C3D4E5F60718293A4C0 /* Places.xctestplan */,
 				00C9C4EB30A46655000F56F4 /* Places */,
 				00C9C50230A46657000F56F4 /* PlacesTests */,
 				00C9C50C30A46657000F56F4 /* PlacesUITests */,

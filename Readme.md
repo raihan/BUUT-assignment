@@ -60,3 +60,7 @@ To run the tests from the command line:
 xcodebuild test -project Places.xcodeproj -scheme Places -testPlan Places \
   -destination 'platform=iOS Simulator,name=iPhone 17'
 ```
+
+#### Screenshot:
+<img width="250" alt="Locations" src="https://github.com/user-attachments/assets/3a74dafa-1276-4d3f-b151-3a14d95c7bac" />
+

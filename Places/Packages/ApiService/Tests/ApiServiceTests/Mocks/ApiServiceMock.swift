@@ -2,13 +2,13 @@
 //  ApiServiceMock.swift
 //  ApiService
 //
-//  Created by Abdullah Zubair on 13/07/2026.
+//  Created by Abdullah Zubair on 11/11/2026.
 //
 
 import Foundation
 @testable import ApiService
 
-final actor ApiServiceMock: ApiServiceProtocol {
+actor ApiServiceMock: ApiServiceProtocol {
     var sendReturnedValue: Any?
 
     func send<T: Decodable & Sendable>(

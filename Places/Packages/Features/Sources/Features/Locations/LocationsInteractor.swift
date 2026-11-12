@@ -25,22 +25,21 @@ final class LocationsInteractor: LocationsInteracting {
 
     func fetchLocations() {
         fetchTask?.cancel()
+        let locationsApi = locationsApi
         fetchTask = Task { [weak self] in
-            guard let self else { return }
-
             let locations: [Location]
             do {
                 locations = try await locationsApi.fetchLocations().locations
             } catch {
                 guard !Task.isCancelled else { return }
-                output?.didFailFetchingLocations(error: error)
+                self?.output?.didFailFetchingLocations(error: error)
                 return
             }
 
             guard !Task.isCancelled else { return }
-            output?.didFetchLocations(locations)
+            self?.output?.didFetchLocations(locations)
 
-            await resolveMissingNames(in: locations)
+            await self?.resolveMissingNames(in: locations)
         }
     }
 
@@ -55,7 +54,7 @@ final class LocationsInteractor: LocationsInteracting {
             guard let cityName = await reverseGeocoder.cityName(latitude: location.lat, longitude: location.long) else {
                 continue
             }
-            resolvedLocations[index] = Location(id: location.id, name: cityName, lat: location.lat, long: location.long)
+            resolvedLocations[index] = Location(name: cityName, lat: location.lat, long: location.long)
         }
 
         guard !Task.isCancelled, resolvedLocations != locations else { return }

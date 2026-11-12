@@ -43,7 +43,7 @@ graph TD
 - Used constructor injection for all dependencies, so every module can be tested with mocks.
 - Used `Async-Await` for networking and reverse geocoding.
 - Used `MapKit` reverse geocoding to resolve the city name of unnamed locations. The list is shown immediately and updated once the city names are resolved.
-- Created an `ApiService` class to handle API consumption, with scalability in mind for future expansion.
+- Created an `ApiService` actor to handle API consumption, with scalability in mind for future expansion.
 - Wrote unit tests using the latest `Swift Testing` framework and added test cases for the features, UI components, utility, Location API, API Service and model layers.
 - Added a test plan (`Places.xctestplan`) that runs the tests of the app and all packages together, with code coverage enabled.
 - No third-party dependencies are used.

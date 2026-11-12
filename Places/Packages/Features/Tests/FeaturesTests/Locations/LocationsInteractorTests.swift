@@ -120,15 +120,14 @@ struct LocationsInteractorTests {
         #expect(resolved[1].name == "Madrid")
     }
 
-    @Test("keeps the id and coordinates of the resolved location")
-    func keepsIdentityOfResolvedLocation() async throws {
+    @Test("keeps the coordinates of the resolved location")
+    func keepsCoordinatesOfResolvedLocation() async throws {
         let locations = try LocationsFixture.locations([(nil, 40.4380638, -3.7495758)])
         reverseGeocoder.cityNameLatitudeLongitudeReturnValue = "Madrid"
 
         await fetchLocations(from: LocationsApiProtocolMock(returnValue: locations))
 
         let resolved = try #require(output.didFetchLocationsReceivedLocations?.first)
-        #expect(resolved.id == locations.locations[0].id)
         #expect(resolved.lat == 40.4380638)
         #expect(resolved.long == -3.7495758)
     }

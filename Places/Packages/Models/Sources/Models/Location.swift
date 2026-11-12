@@ -2,19 +2,17 @@
 //  Location.swift
 //  Models
 //
-//  Created by Abdullah Zubair on 13/07/2026.
+//  Created by Abdullah Zubair on 11/11/2026.
 //
 
 import Foundation
 
-public struct Location: Decodable, Sendable, Equatable, Identifiable {
-    public let id: UUID
+public struct Location: Decodable, Sendable, Equatable {
     public let name: String?
     public let lat: Double
     public let long: Double
     
-    public init(id: UUID = UUID(), name: String?, lat: Double, long: Double) {
-        self.id = id
+    public init(name: String?, lat: Double, long: Double) {
         self.name = name
         self.lat = lat
         self.long = long

@@ -2,7 +2,7 @@
 //  LocationsApi.swift
 //  LocationsApi
 //
-//  Created by Abdullah Zubair on 13/07/2026.
+//  Created by Abdullah Zubair on 11/11/2026.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ public protocol LocationsApiProtocol: Actor {
     func fetchLocations() async throws -> Locations
 }
 
-public final actor LocationsApi: LocationsApiProtocol {
+public actor LocationsApi: LocationsApiProtocol {
     private let apiService: ApiServiceProtocol
     
     public init(apiService: ApiServiceProtocol = ApiService()) {

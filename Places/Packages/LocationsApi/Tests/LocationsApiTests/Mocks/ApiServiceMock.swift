@@ -2,14 +2,14 @@
 //  ApiServiceMock.swift
 //  LocationsApi
 //
-//  Created by Abdullah Zubair on 13/07/2026.
+//  Created by Abdullah Zubair on 11/11/2026.
 //
 
 import Foundation
 @testable import ApiService
 @testable import Models
 
-final actor ApiServiceMock: ApiServiceProtocol {
+actor ApiServiceMock: ApiServiceProtocol {
     private var sendReturnedValue: Any?
 
     func updateSendReturnedValue(newValue: Any?) {

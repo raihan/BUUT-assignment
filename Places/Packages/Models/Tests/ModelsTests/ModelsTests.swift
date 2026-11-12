@@ -2,7 +2,7 @@
 //  ModelsTests.swift
 //  Models
 //
-//  Created by Abdullah Zubair on 13/07/2026.
+//  Created by Abdullah Zubair on 11/11/2026.
 //
 
 import Testing
@@ -107,5 +107,33 @@ struct ModelsTests {
         
         // Then
         #expect(locations.locations.isEmpty)
+    }
+
+    // MARK: - Equality
+
+    @Test
+    func sameLocationDecodedTwiceIsEqual() throws {
+        // Given
+        let json = #"{"name": "Amsterdam", "lat": 52.3547498, "long": 4.8339215}"#
+        let data = try #require(json.data(using: .utf8))
+
+        // When
+        let first = try JSONDecoder().decode(Location.self, from: data)
+        let second = try JSONDecoder().decode(Location.self, from: data)
+
+        // Then
+        #expect(first == second)
+    }
+
+    @Test
+    func locationsWithDifferentDataAreNotEqual() {
+        // Given
+        let amsterdam = Location(name: "Amsterdam", lat: 52.3547498, long: 4.8339215)
+
+        // Then
+        #expect(amsterdam != Location(name: "Madrid", lat: 52.3547498, long: 4.8339215))
+        #expect(amsterdam != Location(name: "Amsterdam", lat: 40.4380638, long: 4.8339215))
+        #expect(amsterdam != Location(name: "Amsterdam", lat: 52.3547498, long: -3.7495758))
+        #expect(amsterdam != Location(name: nil, lat: 52.3547498, long: 4.8339215))
     }
 }
